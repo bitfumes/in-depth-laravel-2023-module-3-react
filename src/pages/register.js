@@ -18,7 +18,21 @@ export default function Register() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(form);
+
+    fetch("http://localhost:8000/api/auth/register", {
+      method: "POST",
+      body: JSON.stringify(form),
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    })
+      .then(() => {
+        console.log("success");
+      })
+      .catch(() => {
+        console.log("error is here");
+      });
   }
 
   return (
