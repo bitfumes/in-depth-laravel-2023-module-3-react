@@ -1,8 +1,10 @@
 import { Button, Card, Input, Typography } from "@material-tailwind/react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useState } from "react";
 
 export default function Register() {
+  const router = useRouter();
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -31,9 +33,11 @@ export default function Register() {
 
     const data = await res.json();
     if (res.ok) {
-      console.log("success");
+      toast.success("You are now registered!");
+      router.push("/login");
       return;
     } else {
+      toast.error("Wow so easy!");
       if (data.errors) {
         setErrors(data.errors);
       }
@@ -93,6 +97,22 @@ export default function Register() {
                 />
                 {errors.password && (
                   <small className="text-red-500">{errors.password[0]}</small>
+                )}
+              </div>
+              <div>
+                <Input
+                  value={form.password_confirmation}
+                  onChange={handleChange}
+                  type="password"
+                  size="lg"
+                  label="Confirm Password"
+                  name="password_confirmation"
+                  error={errors.password_confirmation}
+                />
+                {errors.password_confirmation && (
+                  <small className="text-red-500">
+                    {errors.password_confirmation[0]}
+                  </small>
                 )}
               </div>
             </div>
