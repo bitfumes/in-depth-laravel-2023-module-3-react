@@ -1,4 +1,5 @@
 import { Button, Card, Input, Typography } from "@material-tailwind/react";
+import Cookies from "js-cookie";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -33,6 +34,7 @@ export default function Login() {
     const data = await res.json();
     if (res.ok) {
       toast.success("You are now logged in!");
+      Cookies.set("token", data.token, { expires: 1 });
       router.push("/");
       return;
     } else {
