@@ -22,7 +22,7 @@ export default function Register() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    const res = await fetch("http://localhost:8000/api/auth/register", {
+    const res = await fetch("http://localhost:8000/api/user/register", {
       method: "POST",
       body: JSON.stringify(form),
       headers: {
@@ -37,7 +37,7 @@ export default function Register() {
       router.push("/login");
       return;
     } else {
-      toast.error("Wow so easy!");
+      toast.error("Check for any error!");
       if (data.errors) {
         setErrors(data.errors);
       }
@@ -63,10 +63,10 @@ export default function Register() {
                 <Input
                   value={form.name}
                   onChange={handleChange}
+                  error={errors.name}
                   size="lg"
                   label="Name"
                   name="name"
-                  error={errors.name}
                 />
                 {errors.name && (
                   <small className="text-red-500">{errors.name[0]}</small>
