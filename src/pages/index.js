@@ -9,16 +9,22 @@ export default function Home() {
     console.log("home");
   }, []);
 
-  function logout() {
-    Cookies.remove("token");
-    fetch("http://localhost:8000/api/user/logout", {
+  async function logout() {
+    const token = Cookies.get("token");
+
+    const res = await fetch("http://localhost:8000/api/user/logout", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
+        Authorization: "Bearer " + token,
       },
     });
-    router.push("/login");
+
+    if (res.ok) {
+      Cookies.remove("token");
+      router.push("/login");
+    }
   }
 
   return (
