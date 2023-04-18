@@ -9,6 +9,8 @@ export default function Register() {
     password: "",
   });
 
+  const [errors, setErrors] = useState({});
+
   function handleChange(e) {
     setForm({
       ...form,
@@ -16,23 +18,26 @@ export default function Register() {
     });
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-
-    fetch("http://localhost:8000/api/auth/register", {
+    const res = await fetch("http://localhost:8000/api/auth/register", {
       method: "POST",
       body: JSON.stringify(form),
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
       },
-    })
-      .then(() => {
-        console.log("success");
-      })
-      .catch(() => {
-        console.log("error is here");
-      });
+    });
+
+    const data = await res.json();
+    if (res.ok) {
+      console.log("success");
+      return;
+    } else {
+      if (data.errors) {
+        setErrors(data.errors);
+      }
+    }
   }
 
   return (
@@ -50,28 +55,46 @@ export default function Register() {
             className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96"
           >
             <div className="mb-4 flex flex-col gap-6">
-              <Input
-                value={form.name}
-                onChange={handleChange}
-                size="lg"
-                label="Name"
-                name="name"
-              />
-              <Input
-                value={form.email}
-                onChange={handleChange}
-                size="lg"
-                label="Email"
-                name="email"
-              />
-              <Input
-                value={form.password}
-                onChange={handleChange}
-                type="password"
-                size="lg"
-                label="Password"
-                name="password"
-              />
+              <div>
+                <Input
+                  value={form.name}
+                  onChange={handleChange}
+                  size="lg"
+                  label="Name"
+                  name="name"
+                  error={errors.name}
+                />
+                {errors.name && (
+                  <small className="text-red-500">{errors.name[0]}</small>
+                )}
+              </div>
+              <div>
+                <Input
+                  value={form.email}
+                  onChange={handleChange}
+                  size="lg"
+                  label="Email"
+                  name="email"
+                  error={errors.email}
+                />
+                {errors.email && (
+                  <small className="text-red-500">{errors.email[0]}</small>
+                )}
+              </div>
+              <div>
+                <Input
+                  value={form.password}
+                  onChange={handleChange}
+                  type="password"
+                  size="lg"
+                  label="Password"
+                  name="password"
+                  error={errors.password}
+                />
+                {errors.password && (
+                  <small className="text-red-500">{errors.password[0]}</small>
+                )}
+              </div>
             </div>
             <Button type="submit" className="mt-6" fullWidth>
               Register
