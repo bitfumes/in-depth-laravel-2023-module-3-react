@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
-export default function Home() {
+function Home() {
   const router = useRouter();
   useEffect(() => {
     console.log("home");
@@ -34,3 +34,5 @@ export default function Home() {
     </div>
   );
 }
+
+export default Home;

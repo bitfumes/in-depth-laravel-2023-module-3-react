@@ -11,14 +11,12 @@ export default function App({ Component, pageProps }) {
     window["toast"] = toast;
   }, []);
 
+  const getLayout = Component.getLayout ?? ((page) => <Layout>{page}</Layout>);
+
   return (
     <>
       <ToastContainer />
-      <ThemeProvider>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </ThemeProvider>
+      <ThemeProvider>{getLayout(<Component {...pageProps} />)}</ThemeProvider>
     </>
   );
 }

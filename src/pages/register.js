@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
-export default function Register() {
+function Register() {
   const router = useRouter();
   const [form, setForm] = useState({
     name: "",
@@ -134,3 +134,7 @@ export default function Register() {
     </div>
   );
 }
+
+Register.getLayout = (page) => page;
+
+export default Register;
