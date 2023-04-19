@@ -25,6 +25,25 @@ export default function Emailist() {
     toast.error("Check for any error!");
   }
 
+  async function destroy(id) {
+    const token = Cookies.get("token");
+    const res = await fetch(`http://localhost:8000/api/email-list/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: "Bearer " + token,
+      },
+    });
+
+    if (res.ok) {
+      setLists(lists.filter((list) => list.id !== id));
+      return;
+    }
+
+    toast.error("Check for any error!");
+  }
+
   useEffect(() => {
     getLists();
   }, []);
@@ -53,6 +72,9 @@ export default function Emailist() {
               <th scope="col" className="px-6 py-3">
                 Description
               </th>
+              <th scope="col" className="px-6 py-3">
+                Actions
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -68,6 +90,18 @@ export default function Emailist() {
                   {list.name}
                 </th>
                 <td className="px-6 py-4">{list.description}</td>
+                <td className="px-6 py-4">
+                  <Link href={`/email-list/${list.id}/edit`}>
+                    <Button color="amber">Edit</Button>
+                  </Link>
+                  <Button
+                    onClick={() => destroy(list.id)}
+                    color="red"
+                    className="ml-2"
+                  >
+                    Delete
+                  </Button>
+                </td>
               </tr>
             ))}
           </tbody>
