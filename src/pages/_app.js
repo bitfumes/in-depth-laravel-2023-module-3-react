@@ -1,3 +1,4 @@
+import Layout from "@/components/layouts/layout";
 import "@/styles/globals.css";
 
 import { ThemeProvider } from "@material-tailwind/react";
@@ -14,7 +15,9 @@ export default function App({ Component, pageProps }) {
     <>
       <ToastContainer />
       <ThemeProvider>
-        <Component {...pageProps} />
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
       </ThemeProvider>
     </>
   );
