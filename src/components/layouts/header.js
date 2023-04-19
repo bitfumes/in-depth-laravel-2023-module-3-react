@@ -1,3 +1,4 @@
+import { AppContext } from "@/store/app";
 import {
   Button,
   IconButton,
@@ -8,17 +9,20 @@ import {
 import Cookies from "js-cookie";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 export default function Header() {
   const [openNav, setOpenNav] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const router = useRouter();
+  const { state, setState } = useContext(AppContext);
 
   useEffect(() => {
     const token = Cookies.get("token");
     if (token) {
-      setIsAuthenticated(true);
+      setState({
+        ...state,
+        isAuthenticated: true,
+      });
     }
   }, []);
 
@@ -94,7 +98,7 @@ export default function Header() {
           <span>Newsletter</span>
         </Typography>
         <div className="hidden lg:block">{navList}</div>
-        {!isAuthenticated && (
+        {!state.isAuthenticated && (
           <Link href={"/login"}>
             <Button
               variant="gradient"
@@ -106,7 +110,7 @@ export default function Header() {
           </Link>
         )}
 
-        {isAuthenticated && (
+        {state.isAuthenticated && (
           <Button
             onClick={logout}
             variant="gradient"
