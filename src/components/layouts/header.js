@@ -59,9 +59,9 @@ export default function Header() {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <a href="#" className="flex items-center">
+        <Link href="/email-list" className="flex items-center">
           Email List
-        </a>
+        </Link>
       </Typography>
       <Typography
         as="li"
@@ -69,9 +69,9 @@ export default function Header() {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <a href="#" className="flex items-center">
+        <Link href="/campaigns" className="flex items-center">
           Campaigns
-        </a>
+        </Link>
       </Typography>
       <Typography
         as="li"
@@ -79,9 +79,9 @@ export default function Header() {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <a href="#" className="flex items-center">
+        <Link href="/subscribers" className="flex items-center">
           Subscribers
-        </a>
+        </Link>
       </Typography>
     </ul>
   );
