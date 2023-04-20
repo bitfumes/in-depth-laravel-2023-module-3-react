@@ -65,16 +65,6 @@ export default function Header() {
           Campaigns
         </Link>
       </Typography>
-      <Typography
-        as="li"
-        variant="small"
-        color="blue-gray"
-        className="p-1 font-normal"
-      >
-        <Link href="/subscribers" className="flex items-center">
-          Subscribers
-        </Link>
-      </Typography>
     </ul>
   );
 
