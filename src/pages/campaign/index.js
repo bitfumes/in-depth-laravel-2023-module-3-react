@@ -33,6 +33,25 @@ export default function Campaign() {
     getCampaigns();
   }, []);
 
+  async function sendNow(campaign) {
+    if (campaign.status === 1) return;
+    const res = await http(`campaign/${campaign.id}/send`, { method: "POST" });
+    if (res.ok) {
+      toast.success("Campaign sent successfully");
+      setCampaigns(
+        Campaigns.map((camp) => {
+          if (camp.id === campaign.id) {
+            camp.status = 1;
+          }
+          return camp;
+        })
+      );
+      return;
+    }
+
+    toast.error("Check for any error!");
+  }
+
   return (
     <div>
       <div className="flex justify-between">
@@ -67,30 +86,35 @@ export default function Campaign() {
             </tr>
           </thead>
           <tbody>
-            {Campaigns.map((campiagn) => (
+            {Campaigns.map((campaign) => (
               <tr
-                key={campiagn.id}
+                key={campaign.id}
                 className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
               >
                 <th
                   scope="row"
                   className="w-3/12 px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                 >
-                  <Link href={`/email-campiagn/${campiagn.id}`}>
-                    {campiagn.name}
+                  <Link href={`/email-campaign/${campaign.id}`}>
+                    {campaign.name}
                   </Link>
                 </th>
-                <td className="w-2/12 px-6 py-4">{campiagn.list?.name}</td>
-                <td className="w-2/12 px-6 py-4">{campiagn.subject}</td>
+                <td className="w-2/12 px-6 py-4">{campaign.list?.name}</td>
+                <td className="w-2/12 px-6 py-4">{campaign.subject}</td>
                 <td className="w-2/12 px-6 py-4">
-                  {campiagn.status ? "Sent" : "In Draft"}
+                  {campaign.status ? "Sent" : "In Draft"}
                 </td>
                 <td className="w-4/12 px-6 py-4">
-                  <Link href={`/campiagn/${campiagn.id}/edit`}>
-                    <Button color="blue">Send Now</Button>
-                  </Link>
                   <Button
-                    onClick={() => destroy(campiagn.id)}
+                    disabled={campaign.status}
+                    onClick={() => sendNow(campaign)}
+                    color="blue"
+                  >
+                    Send Now
+                  </Button>
+
+                  <Button
+                    onClick={() => destroy(campaign.id)}
                     color="red"
                     className="ml-2"
                   >
