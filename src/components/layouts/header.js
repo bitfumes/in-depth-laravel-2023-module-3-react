@@ -61,7 +61,7 @@ export default function Header() {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <Link href="/campaigns" className="flex items-center">
+        <Link href="/campaign" className="flex items-center">
           Campaigns
         </Link>
       </Typography>
