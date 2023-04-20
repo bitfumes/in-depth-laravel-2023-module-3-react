@@ -23,6 +23,8 @@ export default function CreateCampaign() {
     subject: "",
     content: "",
     scheduled_at: "",
+    from_name: "Sarthak",
+    from_email: "sarthak@bitfumes.com",
     list_id: null,
   });
 
@@ -78,38 +80,68 @@ export default function CreateCampaign() {
           </Typography>
         </CardHeader>
         <CardBody className="flex flex-col gap-4">
-          <Select label="Select Subscriber List">
-            {lists.map((list) => (
-              <Option key={list.id}>{list.name}</Option>
-            ))}
-          </Select>
+          <div>
+            <Select
+              label="Select Subscriber List"
+              name="list_id"
+              value={form.list_id}
+              onChange={(value) => setForm({ ...form, list_id: value })}
+            >
+              {lists.map((list) => (
+                <Option key={list.id} value={list.id}>
+                  {list.name}
+                </Option>
+              ))}
+            </Select>
+            {errors.list_id && (
+              <small className="text-red-500">{errors.list_id[0]}</small>
+            )}
+          </div>
 
-          <Input
-            value={form.name}
-            onChange={(e) =>
-              setForm({ ...form, [e.target.name]: e.target.value })
-            }
-            name="name"
-            label="Name"
-            size="lg"
-          />
-          <Input
-            value={form.subject}
-            onChange={(e) =>
-              setForm({ ...form, [e.target.name]: e.target.value })
-            }
-            name="subject"
-            label="subject"
-            size="lg"
-          />
-          <Textarea
-            label="Content"
-            name="content"
-            value={form.content}
-            onChange={(e) =>
-              setForm({ ...form, [e.target.name]: e.target.value })
-            }
-          />
+          <div>
+            <Input
+              value={form.name}
+              onChange={(e) =>
+                setForm({ ...form, [e.target.name]: e.target.value })
+              }
+              name="name"
+              label="Name"
+              size="lg"
+            />
+            {errors.name && (
+              <small className="text-red-500">{errors.name[0]}</small>
+            )}
+          </div>
+
+          <div>
+            <Input
+              value={form.subject}
+              onChange={(e) =>
+                setForm({ ...form, [e.target.name]: e.target.value })
+              }
+              name="subject"
+              label="subject"
+              size="lg"
+            />
+            {errors.subject && (
+              <small className="text-red-500">{errors.subject[0]}</small>
+            )}
+          </div>
+
+          <div>
+            <Textarea
+              label="Content"
+              name="content"
+              value={form.content}
+              onChange={(e) =>
+                setForm({ ...form, [e.target.name]: e.target.value })
+              }
+            />
+            {errors.content && (
+              <small className="text-red-500">{errors.content[0]}</small>
+            )}
+          </div>
+
           <input
             type="datetime-local"
             name="scheduled_at"

@@ -52,11 +52,14 @@ export default function Campaign() {
                 Name
               </th>
               <th scope="col" className="px-6 py-3">
-                Description
+                Subscriber List
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Subject
               </th>
 
               <th scope="col" className="px-6 py-3">
-                Subscribe Link
+                Status
               </th>
               <th scope="col" className="px-6 py-3">
                 Actions
@@ -77,11 +80,14 @@ export default function Campaign() {
                     {campiagn.name}
                   </Link>
                 </th>
-                <td className="w-3/12 px-6 py-4">{campiagn.description}</td>
-                <td className="w-3/12 px-6 py-4">{campiagn.subscribeLink}</td>
+                <td className="w-2/12 px-6 py-4">{campiagn.list?.name}</td>
+                <td className="w-2/12 px-6 py-4">{campiagn.subject}</td>
+                <td className="w-2/12 px-6 py-4">
+                  {campiagn.status ? "Sent" : "In Draft"}
+                </td>
                 <td className="w-4/12 px-6 py-4">
                   <Link href={`/campiagn/${campiagn.id}/edit`}>
-                    <Button color="amber">Edit</Button>
+                    <Button color="blue">Send Now</Button>
                   </Link>
                   <Button
                     onClick={() => destroy(campiagn.id)}
