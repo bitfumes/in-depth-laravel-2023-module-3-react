@@ -1,5 +1,5 @@
+import http from "@/utility/http";
 import { Button, Typography } from "@material-tailwind/react";
-import Cookies from "js-cookie";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -7,14 +7,7 @@ export default function Emailist() {
   const [lists, setLists] = useState([]);
 
   async function getLists() {
-    const token = Cookies.get("token");
-    const res = await fetch("http://localhost:8000/api/email-list", {
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: "Bearer " + token,
-      },
-    });
+    const res = await http("email-list");
 
     const { data } = await res.json();
     if (res.ok) {
@@ -26,15 +19,7 @@ export default function Emailist() {
   }
 
   async function destroy(id) {
-    const token = Cookies.get("token");
-    const res = await fetch(`http://localhost:8000/api/email-list/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: "Bearer " + token,
-      },
-    });
+    const res = await http(`email-list/${id}`, { method: "DELETE" });
 
     if (res.ok) {
       setLists(lists.filter((list) => list.id !== id));
@@ -85,12 +70,12 @@ export default function Emailist() {
               >
                 <th
                   scope="row"
-                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                  className="w-3/12 px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                 >
                   {list.name}
                 </th>
-                <td className="px-6 py-4">{list.description}</td>
-                <td className="px-6 py-4">
+                <td className="w-6/12 px-6 py-4">{list.description}</td>
+                <td className="w-4/12 px-6 py-4">
                   <Link href={`/email-list/${list.id}/edit`}>
                     <Button color="amber">Edit</Button>
                   </Link>

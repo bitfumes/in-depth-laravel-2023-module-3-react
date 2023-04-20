@@ -1,4 +1,5 @@
 import { AppContext } from "@/store/app";
+import http from "@/utility/http";
 import {
   Button,
   IconButton,
@@ -27,16 +28,7 @@ export default function Header() {
   }, []);
 
   async function logout() {
-    const token = Cookies.get("token");
-
-    const res = await fetch("http://localhost:8000/api/user/logout", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: "Bearer " + token,
-      },
-    });
+    const res = await http("user/logout", { method: "POST" });
 
     if (res.ok) {
       Cookies.remove("token");

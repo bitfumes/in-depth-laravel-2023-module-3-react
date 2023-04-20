@@ -1,3 +1,4 @@
+import http from "@/utility/http";
 import { Button, Card, Input, Typography } from "@material-tailwind/react";
 import Cookies from "js-cookie";
 import Link from "next/link";
@@ -22,13 +23,9 @@ function Login() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    const res = await fetch("http://localhost:8000/api/user/login", {
+    const res = await http("user/login", {
       method: "POST",
       body: JSON.stringify(form),
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
     });
 
     const data = await res.json();
