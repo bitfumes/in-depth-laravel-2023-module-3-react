@@ -57,6 +57,10 @@ export default function Emailist() {
               <th scope="col" className="px-6 py-3">
                 Description
               </th>
+
+              <th scope="col" className="px-6 py-3">
+                Subscribe Link
+              </th>
               <th scope="col" className="px-6 py-3">
                 Actions
               </th>
@@ -74,7 +78,8 @@ export default function Emailist() {
                 >
                   {list.name}
                 </th>
-                <td className="w-6/12 px-6 py-4">{list.description}</td>
+                <td className="w-3/12 px-6 py-4">{list.description}</td>
+                <td className="w-3/12 px-6 py-4">{list.subscribeLink}</td>
                 <td className="w-4/12 px-6 py-4">
                   <Link href={`/email-list/${list.id}/edit`}>
                     <Button color="amber">Edit</Button>
